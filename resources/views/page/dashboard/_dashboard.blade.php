@@ -140,6 +140,7 @@ window.chartColors = {
     var humidities;
     $(document).ready(function() {
         $('a[href="/"]').removeClass("active");
+		$('#logo').addClass("active");
         $('a[href="/dashboard"]').addClass("active");
         $('#headerInicio').css("height", "20vh");
         $('#headerInicio').css("min-height", "auto");

@@ -1,6 +1,6 @@
 <div class="contenedor contenido-header">
     <div id="nav" class="barra">
-        <a href="/">
+        <a id="logo" href="/">
             <img src="/img/logo.svg" alt="Logotipo project">
         </a>
         <div class="mobile-menu">
@@ -14,4 +14,6 @@
         </nav>
     </div>
     <h1 id="textHeader">Pollution in our country</h1>
-</div> 
+</div>
+<!-- Return to Top -->
+<a href="javascript:" id="return-to-top"><i class="fas fa-chevron-up"></i></a> 
