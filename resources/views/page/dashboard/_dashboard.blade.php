@@ -3,7 +3,8 @@
 {{-- Content --}}
 @section('content')
 <div class="heading-text heading-section text-center">
-	<h2>Monitoring</h2>
+	<!-- <h2>Monitoring</h2> -->
+	<h2>Air Quality Index (AQI)</h2>
 </div>
 <div class="card m-4">
 	<div class="row">
@@ -38,13 +39,13 @@
 				<div class="col-6">
 					<div>
 						<h5 class="title-chartstatus">Temperature</h5>
-						<div id="chart_temperature" style="width: 200px; height: 200px;"></div>
+						<div id="Temperature" style="width: 200px; height: 200px;"></div>
 					</div>
 				</div>
 				<div class="col-6">
 					<div>
 						<h5 class="title-chartstatus">Humidity</h5>
-						<div id="chart_humidity" style="width: 200px; height: 200px;"></div>
+						<div id="Humidity" style="width: 200px; height: 200px;"></div>
 					</div>
 				</div>
 			</div>
@@ -52,7 +53,7 @@
 				<div class="col-6">
 					<div>
 						<h5 class="title-chartstatus">CO2</h5>
-						<div id="chart_c02" style="width: 200px; height: 200px;"></div>
+						<div id="Carbon Monoxide" style="width: 200px; height: 200px;"></div>
 					</div>
 				</div>
 			</div>
@@ -284,8 +285,11 @@ window.chartColors = {
 	Samples.utils.srand(Date.now());
 
 }(this));
+	// Global variables.
     var temperatures;
     var humidities;
+	var c02s;
+	var elements;
     $(document).ready(function() {
         $('a[href="/"]').removeClass("active");
 		$('#logo').addClass("active");
@@ -299,11 +303,10 @@ window.chartColors = {
 			drawMainChart(true);
 			drawStatusCharts(true);
         }, 10000);
-		// $('.highcharts-credits').text('');
     });
 
-    function drawMainChart(request) {
-        if (request) {
+    function drawMainChart(newRequest) {
+        if (newRequest) {
             $.ajax({
                 url: 'dashboard/update',
                 type: 'GET',
@@ -317,14 +320,16 @@ window.chartColors = {
                         temperatures = data.temperatures;
                         humidities = data.humidities;
                         window.myLine.data.labels.splice(0, 1); // Remove first label.
-                        var totalTemp = temperatures.length;
-                        var totalHum = humidities.length;
-                        window.myLine.data.labels.push(temperatures[totalTemp-1].hour); // Se actualiza la hora.
-                        window.myLine.data.datasets[0].data[9] = temperatures[totalTemp - 1].grade; // Actualiza los grados.
-                        window.myLine.data.datasets[1].data[9] = humidities[totalHum - 1].grade; // Actualiza los grados.
+                        // var totalTemp = temperatures.length;
+                        // var totalHum = humidities.length;
+						console.log(temperatures.hour);
+						console.log(humidities.grade);
+                        window.myLine.data.labels.push(temperatures.hour); // Se actualiza la hora.
+                        window.myLine.data.datasets[0].data[9] = temperatures.grade; // Actualiza los grados.
+                        window.myLine.data.datasets[1].data[9] = humidities.grade; // Actualiza los grados.
                         window.myLine.update();
                     } else {
-                        console.log("Ajax not successed");
+                        console.log('%c Error: ', 'color:red;font-size:16px;', 'Error server.');
                     }
                 }
             });
@@ -332,69 +337,7 @@ window.chartColors = {
             // Get data from controller and pass to js variable.
             temperatures = {!! json_encode($temperatures->toArray()) !!};
             humidities = {!! json_encode($humidities->toArray()) !!};
-            createMainChart();
-        }
-
-        function getLabels() {
-            var qty = temperatures.length; 
-            // BUG: If the data is less than 10, make an error.
-            return [temperatures[qty-10].hour, temperatures[qty-9].hour, temperatures[qty-8].hour, temperatures[qty-7].hour, temperatures[qty-6].hour, temperatures[qty-5].hour, temperatures[qty-4].hour, temperatures[qty-3].hour, temperatures[qty-2].hour, temperatures[qty-1].hour];
-        }
-
-        function getData(data) {
-            if (data == "temperature") {
-                var typeData = temperatures;
-            } else if (data == "humidity") {
-                var typeData = humidities;
-            }
-            var total = typeData.length;
-            return [typeData[total-10].grade, typeData[total-9].grade, typeData[total-8].grade, typeData[total-7].grade, typeData[total-6].grade, typeData[total-5].grade, typeData[total-4].grade, typeData[total-3].grade, typeData[total-2].grade, typeData[total-1].grade];
-        }
-
-        function getMinimum() {
-            var minimum = 0;
-            var index = 0;
-            var total = temperatures.length;
-            // For temperatures.
-            for (var i = 0;i < 10; i++) {
-                index = index - 1;
-                if (temperatures[total + index].grade < minimum) {
-                    minimum = temperatures[total + index].grade;
-                }
-            }
-            var total = humidities.length;
-            var index = 0;
-            // For humidities.
-            for (var x = 0;x < 10; x++) {
-                index = index - 1;
-                if (humidities[total + index].grade < minimum) {
-                    minimum = humidities[total + index].grade;
-                }
-            }
-            return minimum;
-        }
-
-        function getMaximum() {
-            var maximum = 0;
-            var index = 0;
-            var total = temperatures.length;
-            // For temperatures.
-            for (var i = 0;i < 10; i++) {
-                index = index - 1;
-                if (temperatures[total + index].grade > maximum) {
-                    maximum = temperatures[total + index].grade;
-                }
-            }
-            var total = humidities.length;
-            var index = 0;
-            // For humidities.
-            for (var x = 0;x < 10; x++) {
-                index = index - 1;
-                if (humidities[total + index].grade > maximum) {
-                    maximum = humidities[total + index].grade;
-                }
-            }
-            return maximum;
+            createMainChart(); // Creating main chart.
         }
 
         // Creating main chart.
@@ -405,8 +348,8 @@ window.chartColors = {
 				labels: getLabels(),
 				datasets: [{
 					label: 'Temperature (°C)',
-					backgroundColor: window.chartColors.red,
-					borderColor: window.chartColors.red,
+					backgroundColor: window.chartColors.orange,
+					borderColor: window.chartColors.orange,
 					data: getData('temperature'), // Function get grades from the type of enviorment.
 					fill: false,
 				}, {
@@ -420,7 +363,7 @@ window.chartColors = {
 					fill: false,
 					backgroundColor: window.chartColors.green,
 					borderColor: window.chartColors.green,
-					data: [13,17,26,31,44,43,39,37,40,41],
+					data: [13,17,26,31,44,43,39,37,40,41], // Change for dinamyc data.
 				}]
 			},
 			options: {
@@ -460,36 +403,122 @@ window.chartColors = {
     }
 
 	// Draw each element.
-	function drawStatusCharts() {
-		google.setOnLoadCallback(drawChart);
-		function drawChart() {
-			var data = google.visualization.arrayToDataTable([
-				['Label', 'Value'],
-    			['°C', 3]
-			]);
-			var options = {
-				width: 200,
-				height: 200,
-				redFrom: 20,
-				redTo: 10,
-				yellowFrom: 10,
-				yellowTo: 5,
-				greenFrom: 5,
-				greenTo: 0,
-				minorTicks: 20,
-				max: 0,
-				min: 20,
-				majorTicks: ['20', '1']
-			};
-			var chart = new google.visualization.Gauge(document.getElementById('chart_temperature'));
-			chart.draw(data, options);
-
-			var chart = new google.visualization.Gauge(document.getElementById('chart_humidity'));
-			chart.draw(data, options);
-
-			var chart = new google.visualization.Gauge(document.getElementById('chart_c02'));
-			chart.draw(data, options);
+	function drawStatusCharts(newRequest) {
+		elements = {!! json_encode($elements_configuration->toArray()) !!};
+		console.log('%c Elements: ', 'color:green;font-size:16px;', elements);
+		if (newRequest) {
+			// Use ajax to update elements charts.
+		} else {
+			google.setOnLoadCallback(drawChart);
+			function drawChart() {
+				for (var x = 0; x < elements.length; x++) {
+					var value;
+					switch (elements[x].name) {
+						case 'Temperature': 
+							value = temperatures[temperatures.length - '1'].grade;
+							break;
+						case 'Humidity': 
+							value = humidities[humidities.length - '1'].grade;
+							break;
+						case 'Carbon Monoxide': 
+							value = temperatures[temperatures.length - '1'].grade;
+							break;
+						default: 
+							console.log('Error to find element.');
+					}
+					var data = google.visualization.arrayToDataTable([
+						['Label', 'Value'],
+						[elements[x].unit, parseInt(value)]
+					]);
+					var min = (elements[x].min < '0') ? elements[x].min - 10 : 0;
+					var max = getNearest(elements[x].max);
+					var options = {
+						width: 200,
+						height: 200,
+						redFrom: max,
+						redTo: elements[x].max,
+						yellowFrom: elements[x].min,
+						yellowTo: min,
+						greenFrom: elements[x].max,
+						greenTo: elements[x].min,
+						minorTicks: max,
+						max: min,
+						min: max,
+						majorTicks: [max, min]
+					};
+					var chart = new google.visualization.Gauge(document.getElementById(elements[x].name));
+					chart.draw(data, options);
+				}
+			}
 		}
+	}
+
+	function getLabels() {
+        var qty = temperatures.length; 
+        // BUG: If the data is less than 10, make an error.
+        return [temperatures[qty-10].hour, temperatures[qty-9].hour, temperatures[qty-8].hour, temperatures[qty-7].hour, temperatures[qty-6].hour, temperatures[qty-5].hour, temperatures[qty-4].hour, temperatures[qty-3].hour, temperatures[qty-2].hour, temperatures[qty-1].hour];
+    }
+
+    function getData(data) {
+    	if (data == "temperature") {
+        	var typeData = temperatures;
+        } else if (data == "humidity") {
+            var typeData = humidities;
+        }
+        var total = typeData.length;
+        return [typeData[total-10].grade, typeData[total-9].grade, typeData[total-8].grade, typeData[total-7].grade, typeData[total-6].grade, typeData[total-5].grade, typeData[total-4].grade, typeData[total-3].grade, typeData[total-2].grade, typeData[total-1].grade];
+    }
+
+    function getMinimum() {
+        var minimum = 0;
+        var index = 0;
+        var total = temperatures.length;
+        // For temperatures.
+        for (var i = 0;i < 10; i++) {
+            index = index - 1;
+            if (temperatures[total + index].grade < minimum) {
+                minimum = temperatures[total + index].grade;
+            }
+        }
+        var total = humidities.length;
+        var index = 0;
+        // For humidities.
+        for (var x = 0;x < 10; x++) {
+            index = index - 1;
+            if (humidities[total + index].grade < minimum) {
+                minimum = humidities[total + index].grade;
+            }
+        }
+        return minimum;
+    }
+
+    function getMaximum() {
+        var maximum = 0;
+        var index = 0;
+        var total = temperatures.length;
+        // For temperatures.
+        for (var i = 0;i < 10; i++) {
+            index = index - 1;
+            if (temperatures[total + index].grade > maximum) {
+                maximum = temperatures[total + index].grade;
+            }
+        }
+        var total = humidities.length;
+        var index = 0;
+        // For humidities.
+        for (var x = 0;x < 10; x++) {
+            index = index - 1;
+            if (humidities[total + index].grade > maximum) {
+                maximum = humidities[total + index].grade;
+            }
+        }
+        return maximum;
+    }
+
+	// Using round to the nearest 10.
+	function getNearest(number) {
+		console.log(Math.ceil((number) / 10) * 10);
+		return Math.ceil((number) / 10) * 10;
 	}
     
 </script>
