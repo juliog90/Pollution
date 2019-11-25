@@ -2,12 +2,160 @@
 
 {{-- Content --}}
 @section('content')
-<section class="contenedor seccion" style="width: 90%; text-align:center;padding:10px;">
-    <div class="icono" style="padding:15px;">
-		<canvas id="canvas"></canvas>
+<div class="heading-text heading-section text-center">
+	<h2>Monitoring</h2>
+</div>
+<div class="card m-4">
+	<div class="row">
+		<div class="col-7">
+			<div class="row">
+				<div class="col-12 p-3">
+					<div class="d-flex justify-content-center">
+						<div id="airvalue-index" class="p-3 mb-2 bg-success text-white w-25 text-center display-1 rounded">
+							23
+							<a id="information-air" href="#" data-toggle="modal" data-target="#exampleModalCenter">
+								<i  class="fas fa-info-circle icon-top" style="font-size:25px;"></i>
+							</a>
+						</div>
+						<div class="ml-3">
+							<div id="airvalue-text" class="airvalue-text text-success display-3">
+								Good
+							</div>
+							<div>
+								Updated on 
+								<span id="updated-day">Monday </span><b id="updated-time">07:00</b>.
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<canvas id="canvas"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="col-5" style="padding-top:15px;padding-bottom:10px;">
+			<div class="row">
+				<div class="col-6">
+					<div>
+						<h5 class="title-chartstatus">Temperature</h5>
+						<div id="chart_temperature" style="width: 200px; height: 200px;"></div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div>
+						<h5 class="title-chartstatus">Humidity</h5>
+						<div id="chart_humidity" style="width: 200px; height: 200px;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div>
+						<h5 class="title-chartstatus">CO2</h5>
+						<div id="chart_c02" style="width: 200px; height: 200px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</section>
-
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title-modal w-100 text-center" id="exampleModalLongTitle">About the Air Quality Levels</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<table id="air-information" class="table table-bordered" style="text-align:left;">
+			<thead style="background:#F6F9F9;">
+				<tr>
+					<td class="align-vertically">AQI</td>
+					<td class="align-vertically">Air Pollution Level</td>
+					<td class="align-vertically">Health Implications</td>
+					<td class="align-vertically">Cautionary Statement (for PM2.5)</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="bg-success text-white">
+					<td class="align-vertically" nowrap="true">0 - 50</td>
+					<td class="align-vertically">Good</td>
+					<td class="align-vertically">Air quality is considered satisfactory, and air pollution poses little or no risk</td>
+					<td class="align-vertically">None</td>
+				</tr>
+				<tr class="bg-warning">
+					<td class="align-vertically" nowrap="true">51 - 100</td>
+					<td class="align-vertically">Moderate</td>
+					<td class="align-vertically">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</td>
+					<td class="align-vertically">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</td>
+				</tr>
+				<tr class="bg-orange">
+					<td class="align-vertically" nowrap="true">101 - 150</td>
+					<td class="align-vertically">Unhealthy for Sensitive Groups</td>
+					<td class="align-vertically">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</td>
+					<td class="align-vertically">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</td>
+				</tr>
+				<tr class="bg-danger text-white">
+					<td class="align-vertically" nowrap="true">151 - 200</td>
+					<td class="align-vertically">Unhealthy</td>
+					<td class="align-vertically">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects</td>
+					<td class="align-vertically">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</td>
+				</tr>
+				<tr class="bg-purple text-white">
+					<td class="align-vertically" nowrap="true">201 - 300</td>
+					<td class="align-vertically">Very Unhealthy</td>
+					<td class="align-vertically">Health warnings of emergency conditions. The entire population is more likely to be affected.</td>
+					<td class="align-vertically">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</td>
+				</tr>
+				<tr class="bg-blood text-white">
+					<td class="align-vertically" nowrap="true">300+</td>
+					<td class="align-vertically">Hazardous</td>
+					<td class="align-vertically">Health alert: everyone may experience more serious health effects</td>
+					<td class="align-vertically">Everyone should avoid all outdoor exertion</td>
+				</tr>
+			</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+	#information-air {
+		color: inherit !important;
+	}
+	.icon-top {
+		float: right;
+		right: 10px !important;
+		top: 0px !important;
+	}
+	.modal-body {
+		overflow-x: auto;
+	}
+	.bg-orange {
+		background-color: #FF9933;
+	}
+	.bg-purple {
+		background-color: #660099;
+	}
+	.bg-blood {
+		background-color: #7E0023;
+	}
+	.align-vertically {
+		vertical-align: middle !important;
+	}
+	.title-modal {
+		font-family: 'Lato', sans-serif;
+		font-size: 2rem;
+		line-height: 2;
+		font-weight: bold !important;
+	}
+</style>
 <script type="text/javascript">
 
 window.chartColors = {
@@ -145,10 +293,13 @@ window.chartColors = {
         $('#headerInicio').css("height", "20vh");
         $('#headerInicio').css("min-height", "auto");
         $('#textHeader').html("");
-        drawMainChart(false);
+		drawMainChart(false);
+		drawStatusCharts(false);
         setInterval(() => {
-            drawMainChart(true);
+			drawMainChart(true);
+			drawStatusCharts(true);
         }, 10000);
+		// $('.highcharts-credits').text('');
     });
 
     function drawMainChart(request) {
@@ -253,24 +404,30 @@ window.chartColors = {
 			data: {
 				labels: getLabels(),
 				datasets: [{
-					label: 'Temperature',
+					label: 'Temperature (°C)',
 					backgroundColor: window.chartColors.red,
 					borderColor: window.chartColors.red,
 					data: getData('temperature'), // Function get grades from the type of enviorment.
 					fill: false,
 				}, {
-					label: 'Humidity',
+					label: 'Humidity (% RH)',
 					fill: false,
 					backgroundColor: window.chartColors.blue,
 					borderColor: window.chartColors.blue,
 					data: getData('humidity'), // Function get grades from the type of enviorment.
+				}, {
+					label: 'Carbon Dioxide (%)',
+					fill: false,
+					backgroundColor: window.chartColors.green,
+					borderColor: window.chartColors.green,
+					data: [13,17,26,31,44,43,39,37,40,41],
 				}]
 			},
 			options: {
 				responsive: true,
 				title: {
 					display: true,
-					text: 'Environmental Quality Index'
+					text: ['Environmental Quality Index', 'current past 10 hours data']
 				},
 				scales: {
 					yAxes: [{
@@ -282,8 +439,8 @@ window.chartColors = {
 							suggestedMax: getMaximum() // Get the miximum grade.
 						},
                         scaleLabel: {
-                            display: true,
-                            labelString: 'Grades'
+                            display: true
+                            // labelString: 'Grades' // To show name of left side main chart.
                         }
 					}],
                     xAxes: [{
@@ -295,7 +452,6 @@ window.chartColors = {
 				}
 			}
 		};
-
             window.onload = function() {
                 var ctx = document.getElementById('canvas').getContext('2d');
                 window.myLine = new Chart(ctx, config);
@@ -303,14 +459,38 @@ window.chartColors = {
         }
     }
 
-    
-</script> 
+	// Draw each element.
+	function drawStatusCharts() {
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Label', 'Value'],
+    			['°C', 3]
+			]);
+			var options = {
+				width: 200,
+				height: 200,
+				redFrom: 20,
+				redTo: 10,
+				yellowFrom: 10,
+				yellowTo: 5,
+				greenFrom: 5,
+				greenTo: 0,
+				minorTicks: 20,
+				max: 0,
+				min: 20,
+				majorTicks: ['20', '1']
+			};
+			var chart = new google.visualization.Gauge(document.getElementById('chart_temperature'));
+			chart.draw(data, options);
 
-<style>
-	canvas {
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
+			var chart = new google.visualization.Gauge(document.getElementById('chart_humidity'));
+			chart.draw(data, options);
+
+			var chart = new google.visualization.Gauge(document.getElementById('chart_c02'));
+			chart.draw(data, options);
+		}
 	}
-</style>
+    
+</script>
 @endsection
