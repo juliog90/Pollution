@@ -302,7 +302,7 @@ window.chartColors = {
         setInterval(() => {
 			drawMainChart(true);
 			drawStatusCharts(true);
-        }, 10000);
+        }, 5000);
     });
 
     function drawMainChart(newRequest) {
@@ -334,7 +334,7 @@ window.chartColors = {
                 }
             });
         } else {
-            // Get data from controller and pass to js variable.
+			// Get data from controller and pass to js variable.
             temperatures = {!! json_encode($temperatures->toArray()) !!};
             humidities = {!! json_encode($humidities->toArray()) !!};
             createMainChart(); // Creating main chart.
@@ -377,7 +377,6 @@ window.chartColors = {
 						ticks: {
 							// the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
 							suggestedMin: getMinimum(), // Get the minimum grade.
-
 							// the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
 							suggestedMax: getMaximum() // Get the miximum grade.
 						},
@@ -403,60 +402,75 @@ window.chartColors = {
     }
 
 	// Draw each element.
-	function drawStatusCharts(newRequest) {
-		elements = {!! json_encode($elements_configuration->toArray()) !!};
-		console.log('%c Elements: ', 'color:green;font-size:16px;', elements);
+	function drawStatusCharts(newRequest) {	
 		if (newRequest) {
-			// Use ajax to update elements charts.
-		} else {
-			google.setOnLoadCallback(drawChart);
-			function drawChart() {
-				for (var x = 0; x < elements.length; x++) {
-					var value;
-					switch (elements[x].name) {
-						case 'Temperature': 
-							value = temperatures[temperatures.length - '1'].grade;
-							break;
-						case 'Humidity': 
-							value = humidities[humidities.length - '1'].grade;
-							break;
-						case 'Carbon Monoxide': 
-							value = temperatures[temperatures.length - '1'].grade;
-							break;
-						default: 
-							console.log('Error to find element.');
-					}
-					var data = google.visualization.arrayToDataTable([
-						['Label', 'Value'],
-						[elements[x].unit, parseInt(value)]
-					]);
-					var min = (elements[x].min < '0') ? elements[x].min - 10 : 0;
-					var max = getNearest(elements[x].max);
-					var options = {
-						width: 200,
-						height: 200,
-						redFrom: max,
-						redTo: elements[x].max,
-						yellowFrom: elements[x].min,
-						yellowTo: min,
-						greenFrom: elements[x].max,
-						greenTo: elements[x].min,
-						minorTicks: max,
-						max: min,
-						min: max,
-						majorTicks: [max, min]
-					};
-					var chart = new google.visualization.Gauge(document.getElementById(elements[x].name));
-					chart.draw(data, options);
+			google.charts.load('current', {'packages':['gauge']});
+			google.charts.setOnLoadCallback(() => {
+				elements = {!! json_encode($elements_configuration->toArray()) !!};
+				axios.get("dashboard/update")
+				.then(response => {
+
+					// Si no pongo esto la otra grafica no sirve
+					humidities = response.humidities;
+					temperatures = response.temperatures;
+					// No tiene mucho sentido pero no tengo tiempo de verlo
+
+					var datos = response.data;
+					console.log("hola");
+					
+					// Gauges Graficas
+					for (var x = 0; x < elements.length; x++) {
+						var value;
+						switch (elements[x].name) {
+							case 'Temperature': 
+								value = datos.temperatures.grade;
+								break;
+							case 'Humidity': 
+								value = datos.humidities.grade;
+								break;
+							case 'CarbonDioxide': 
+								value = datos.temperatures.grade;
+								break;
+							default: 
+								console.log('Error to find element.');
+						}
+						var data = google.visualization.arrayToDataTable([
+							['Label', 'Value'],
+							[elements[x].unit, parseInt(value)]
+						]);
+						var min = (elements[x].min < '0') ? elements[x].min - 10 : 0;
+						var max = getNearest(elements[x].max);
+						var options = {
+							width: 200,
+							height: 200,
+							redFrom: max,
+							redTo: elements[x].max,
+							yellowFrom: elements[x].min,
+							yellowTo: min,
+							greenFrom: elements[x].max,
+							greenTo: elements[x].min,
+							minorTicks: max,
+							max: min,
+							min: max,
+							majorTicks: [max, min]
+						};
+						var chart = new google.visualization.Gauge(document.getElementById(elements[x].name));
+						chart.draw(data, options);
 				}
-			}
+				})
+				.catch(error => console.log(error));
+			}) 
 		}
+	
 	}
 
 	function getLabels() {
         var qty = temperatures.length; 
         // BUG: If the data is less than 10, make an error.
-        return [temperatures[qty-10].hour, temperatures[qty-9].hour, temperatures[qty-8].hour, temperatures[qty-7].hour, temperatures[qty-6].hour, temperatures[qty-5].hour, temperatures[qty-4].hour, temperatures[qty-3].hour, temperatures[qty-2].hour, temperatures[qty-1].hour];
+		return [temperatures[qty-10].hour, temperatures[qty-9].hour, temperatures[qty-8].hour, 
+		temperatures[qty-7].hour, temperatures[qty-6].hour, temperatures[qty-5].hour, 
+		temperatures[qty-4].hour, temperatures[qty-3].hour, temperatures[qty-2].hour, 
+		temperatures[qty-1].hour];
     }
 
     function getData(data) {
