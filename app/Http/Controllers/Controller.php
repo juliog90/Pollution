@@ -18,7 +18,7 @@ class Controller extends BaseController
      */
     public function index()
     {
-        $title = "Home | Home";
+        $title = "ACA | Home";
         return view('index', compact('title'));
     }
 }
