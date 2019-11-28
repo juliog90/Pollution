@@ -53,7 +53,7 @@
 				<div class="col-6">
 					<div>
 						<h5 class="title-chartstatus">CO2</h5>
-						<div id="Carbon Monoxide" style="width: 200px; height: 200px;"></div>
+						<div id="CarbonDioxide" style="width: 200px; height: 200px;"></div>
 					</div>
 				</div>
 			</div>
@@ -319,6 +319,7 @@ window.chartColors = {
                         // Updating main chart.
                         temperatures = data.temperatures;
                         humidities = data.humidities;
+						carbonDioxides = data.carbondioxides;
                         window.myLine.data.labels.splice(0, 1); // Remove first label.
                         // var totalTemp = temperatures.length;
                         // var totalHum = humidities.length;
@@ -327,6 +328,7 @@ window.chartColors = {
                         window.myLine.data.labels.push(temperatures.hour); // Se actualiza la hora.
                         window.myLine.data.datasets[0].data[9] = temperatures.grade; // Actualiza los grados.
                         window.myLine.data.datasets[1].data[9] = humidities.grade; // Actualiza los grados.
+						window.myLine.data.datasets[2].data[9] = carbonDioxides.grade; // Actualiza el CO2.
                         window.myLine.update();
                     } else {
                         console.log('%c Error: ', 'color:red;font-size:16px;', 'Error server.');
@@ -415,21 +417,22 @@ window.chartColors = {
 					temperatures = response.temperatures;
 					// No tiene mucho sentido pero no tengo tiempo de verlo
 
-					var datos = response.data;
-					console.log("hola");
+					var temperature = response.data.temperatures.grade;
+					var humidity = response.data.humidities.grade;
+					var carbonDioxide = response.data.carbondioxides.grade;
 					
 					// Gauges Graficas
 					for (var x = 0; x < elements.length; x++) {
 						var value;
 						switch (elements[x].name) {
 							case 'Temperature': 
-								value = datos.temperatures.grade;
+								value = temperature;
 								break;
 							case 'Humidity': 
-								value = datos.humidities.grade;
+								value = humidity;
 								break;
 							case 'CarbonDioxide': 
-								value = datos.temperatures.grade;
+								value = carbonDioxide;
 								break;
 							default: 
 								console.log('Error to find element.');

@@ -24,9 +24,9 @@ class CreateElementsConfigurationTable extends Migration
             $table->softDeletes();
         });
 
-        $temperature = array("name" => "Temperature", "min" => "0", "max" => "40", "neutral" => "20", "unit" => "Celsius");
-        $humidity = array("name" => "Humidity", "min" => "0", "max" => "60", "neutral" => "40", "unit" => "Relative");
-        $carbonDioxide = array("name" => "CarbonDioxide", "min" => "300", "max" => "500", "neutral" => "300", "unit" => "ppm");
+        $temperature = array("name" => "Temperature", "min" => "10", "max" => "30", "neutral" => "20", "unit" => "°C");
+        $humidity = array("name" => "Humidity", "min" => "20", "max" => "100", "neutral" => "40", "unit" => "RH %");
+        $carbonDioxide = array("name" => "CarbonDioxide", "min" => "150", "max" => "300", "neutral" => "300", "unit" => "ppm");
 
         DB::table("elements_configuration")->insert(array ($temperature, $humidity, $carbonDioxide));
     }
