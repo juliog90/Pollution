@@ -288,7 +288,7 @@ window.chartColors = {
 	// Global variables.
     var temperatures;
     var humidities;
-	var c02s;
+	var co2s;
 	var elements;
     $(document).ready(function() {
         $('a[href="/"]').removeClass("active");
@@ -319,7 +319,7 @@ window.chartColors = {
                         // Updating main chart.
                         temperatures = data.temperatures;
                         humidities = data.humidities;
-						carbonDioxides = data.carbondioxides;
+						co2s = data.carbondioxides;
                         window.myLine.data.labels.splice(0, 1); // Remove first label.
                         // var totalTemp = temperatures.length;
                         // var totalHum = humidities.length;
@@ -328,7 +328,7 @@ window.chartColors = {
                         window.myLine.data.labels.push(temperatures.hour); // Se actualiza la hora.
                         window.myLine.data.datasets[0].data[9] = temperatures.grade; // Actualiza los grados.
                         window.myLine.data.datasets[1].data[9] = humidities.grade; // Actualiza los grados.
-						window.myLine.data.datasets[2].data[9] = carbonDioxides.grade; // Actualiza el CO2.
+						window.myLine.data.datasets[2].data[9] = co2s.grade; // Actualiza el CO2.
                         window.myLine.update();
                     } else {
                         console.log('%c Error: ', 'color:red;font-size:16px;', 'Error server.');
@@ -339,6 +339,7 @@ window.chartColors = {
 			// Get data from controller and pass to js variable.
             temperatures = {!! json_encode($temperatures->toArray()) !!};
             humidities = {!! json_encode($humidities->toArray()) !!};
+			co2s = {!! json_encode($carbonDioxides->toArray()) !!};
             createMainChart(); // Creating main chart.
         }
 
@@ -361,11 +362,11 @@ window.chartColors = {
 					borderColor: window.chartColors.blue,
 					data: getData('humidity'), // Function get grades from the type of enviorment.
 				}, {
-					label: 'Carbon Dioxide (%)',
+					label: 'Carbon Dioxide (ppm)',
 					fill: false,
 					backgroundColor: window.chartColors.green,
 					borderColor: window.chartColors.green,
-					data: [13,17,26,31,44,43,39,37,40,41], // Change for dinamyc data.
+					data: getData('carbonDioxide'), // Change for dinamyc data.
 				}]
 			},
 			options: {
@@ -412,11 +413,6 @@ window.chartColors = {
 				axios.get("dashboard/update")
 				.then(response => {
 
-					// Si no pongo esto la otra grafica no sirve
-					humidities = response.humidities;
-					temperatures = response.temperatures;
-					// No tiene mucho sentido pero no tengo tiempo de verlo
-
 					var temperature = response.data.temperatures.grade;
 					var humidity = response.data.humidities.grade;
 					var carbonDioxide = response.data.carbondioxides.grade;
@@ -424,15 +420,22 @@ window.chartColors = {
 					// Gauges Graficas
 					for (var x = 0; x < elements.length; x++) {
 						var value;
+						// Ticks por grafica o secciones
+						var ticks;
+						var min = (elements[x].min < '0') ? elements[x].min - 10 : 0;
+						var max = getNearest(elements[x].max);
 						switch (elements[x].name) {
 							case 'Temperature': 
 								value = temperature;
+								ticks = [max, 25, 20, 15, 10, 5, min];
 								break;
 							case 'Humidity': 
 								value = humidity;
+								ticks = [max, 90, 80, 70, 60, 50, 40, 30, 20, 10, min];
 								break;
 							case 'CarbonDioxide': 
 								value = carbonDioxide;
+								ticks = [max, 450, 400, 350, 300, 250, 200, 150, 100, 50, min];
 								break;
 							default: 
 								console.log('Error to find element.');
@@ -441,8 +444,7 @@ window.chartColors = {
 							['Label', 'Value'],
 							[elements[x].unit, parseInt(value)]
 						]);
-						var min = (elements[x].min < '0') ? elements[x].min - 10 : 0;
-						var max = getNearest(elements[x].max);
+						
 						var options = {
 							width: 200,
 							height: 200,
@@ -455,7 +457,11 @@ window.chartColors = {
 							minorTicks: max,
 							max: min,
 							min: max,
-							majorTicks: [max, min]
+							majorTicks: ticks,
+							animation : {
+								duration : 500,
+								easing : "in"
+							}
 						};
 						var chart = new google.visualization.Gauge(document.getElementById(elements[x].name));
 						chart.draw(data, options);
@@ -481,7 +487,10 @@ window.chartColors = {
         	var typeData = temperatures;
         } else if (data == "humidity") {
             var typeData = humidities;
-        }
+        } else if (data == "carbonDioxide") {
+			var typeData = co2s;
+		}
+
         var total = typeData.length;
         return [typeData[total-10].grade, typeData[total-9].grade, typeData[total-8].grade, typeData[total-7].grade, typeData[total-6].grade, typeData[total-5].grade, typeData[total-4].grade, typeData[total-3].grade, typeData[total-2].grade, typeData[total-1].grade];
     }
