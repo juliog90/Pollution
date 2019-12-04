@@ -12,19 +12,22 @@
                 <!-- <img src="/img/icono1.svg" alt="Icono Seguridad"> -->
                 <i style="color:#CC625B; margin-bottom: 15px;" class="fas fa-balance-scale-left fa-7x"></i>
                 <h3 style="margin-bottom: 5px;">Problem</h3>
-                <p>Quasi quibusdam, quos deserunt, recusandae iusto dolorem voluptatibus quaerat veritatis consectetur culpa sit dignissimos maiores iure id, magnam non voluptatum molestiae doloremque.</p>
+                <p> Air pollution has become a major concern due to natural disasters and problems caused by society, creating 
+                pollution through the burning of products, excess garbage, etc. Pollution is a global problem and we must take the necessary measures.</p>
             </div>
 
             <div class="icono" style="padding:15px;">
                 <i style="color:#C9CC5B; margin-bottom: 15px;"class="fas fa-shield-alt fa-7x"></i>
                 <h3 style="margin-bottom: 5px;">Security</h3>
-                <p>Quasi quibusdam, quos deserunt, recusandae iusto dolorem voluptatibus quaerat veritatis consectetur culpa sit dignissimos maiores iure id, magnam non voluptatum molestiae doloremque.</p>
+                <p>Air is an essential factor for life. It is necessary to manage and propose a model that responds to the 
+                new scenarios to pay attention due to the complex problems of air quality management.</p>
             </div>
 
             <div class="icono" style="padding:15px;">
                 <i style="color:#5BCC89; margin-bottom: 15px;"class="fas fa-clock fa-7x"></i>
                 <h3 style="margin-bottom: 5px;">Solution</h3>
-                <p>Quasi quibusdam, quos deserunt, recusandae iusto dolorem voluptatibus quaerat veritatis consectetur culpa sit dignissimos maiores iure id, magnam non voluptatum molestiae doloremque.</p>
+                <p>Create a system to measure the air quality index in Tijuana, allowing society to be informed about the 
+                state of the city in real time, and thus be able to make a decision about its well-being.</p>
             </div>
         </div>
     </section>
@@ -36,11 +39,12 @@
         </div>
         <div class="contenedor-anuncios">
             <div class="anuncio">
-                <img src="/img/anuncio1.jpg" alt="Anuncio casa en el lago">
+                <img src="/img/tijuana.jfif" alt="Tijuana">
                 <div class="contenido-anuncio">
                     <h3>Tijuana</h3>
-                    <p>Descripcion de lo ocurrido</p>
-                    <p class="precio">Costo en danos: $3,000,0000</p>
+                    <p style="text-align: justify;">Tijuana has registered a higher percentage of air pollution compared to the city of Mexicali, 
+                    a characteristic municipality for commonly registering high levels of air pollutants.</p>
+                    <p class="precio">Damage cost: $3,000,0000</p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">
@@ -61,11 +65,11 @@
             </div>
 
             <div class="anuncio">
-                <img src="/img/anuncio2.jpg" alt="Anuncio casa de lujo">
+                <img src="/img/rosarito2.jfif" alt="Rosarito">
                 <div class="contenido-anuncio">
                     <h3>Rosarito</h3>
                     <p>Descripcion de lo ocurrido</p>
-                    <p class="precio">Costo en danos: $2,000,0000</p>
+                    <p class="precio">Damage cost: $2,000,0000</p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">
@@ -86,11 +90,12 @@
             </div>
 
             <div class="anuncio">
-                <img src="/img/anuncio3.jpg" alt="Anuncio casa con alberca">
+                <img src="/img/ensenada3.jpg" alt="Ensenada">
                 <div class="contenido-anuncio">
                     <h3>Ensenada</h3>
-                    <p>Descripcion de lo ocurrido</p>
-                    <p class="precio">Costo en danos: $3,000,0000</p>
+                    <p>More than 90 percent of the population breathes toxic air in Ensenada every day, due to factories, 
+                    cars, gas stations or electricity generation in the same city.</p>
+                    <p class="precio">Damage cost: $3,000,0000</p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">

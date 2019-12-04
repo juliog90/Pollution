@@ -233,6 +233,9 @@ h4 {
     text-align: center;
     box-shadow: 2px 2px 5px #999;
 }
+.icono p {
+    text-align: justify;
+}
 @media (min-width: 768px) {
     .icono {
         flex-basis: calc(33.3% - 1rem);
