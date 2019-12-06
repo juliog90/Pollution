@@ -484,15 +484,18 @@ window.chartColors = {
 						switch (elements[x].name) {
 							case 'Temperature': 
 								value = temperature;
-								ticks = [max, 25, 20, 15, 10, 5, min];
+								ticks = [30, 25, 20, 15, 10, 5, 0];
+								minorTicks = 5;
 								break;
 							case 'Humidity': 
 								value = humidity;
-								ticks = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, min];
+								ticks = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
+								minorTicks = 10;
 								break;
 							case 'CarbonDioxide': 
 								value = carbonDioxide;
-								ticks = [max, 450, 400, 350, 300, 250, 200, 150, 100, 50, min];
+								ticks = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 0];
+								minorTicks = 10;
 								break;
 							default: 
 								console.log('Error to find element.');
@@ -515,6 +518,7 @@ window.chartColors = {
 							max: min,
 							min: max,
 							majorTicks: ticks,
+							minorTicks: minorTicks,
 							animation : {
 								duration : 500,
 								easing : "in"
