@@ -1,7 +1,7 @@
 <div class="contenedor contenido-header">
     <div id="nav" class="barra">
         <a id="logo" href="/">
-            <img src="/img/logo.svg" alt="Logotipo project">
+            <img src="/img/logoAcaWhiteCutted.png" alt="Logotipo project">
         </a>
         <div class="mobile-menu">
             <a href="#navegacion">

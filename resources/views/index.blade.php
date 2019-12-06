@@ -44,7 +44,7 @@
                     <h3>Tijuana</h3>
                     <p style="text-align: justify;">Tijuana has registered a higher percentage of air pollution compared to the city of Mexicali, 
                     a characteristic municipality for commonly registering high levels of air pollutants.</p>
-                    <p class="precio">Damage cost: $3,000,0000</p>
+                    <p class="precio"></p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">
@@ -68,8 +68,9 @@
                 <img src="/img/rosarito2.jfif" alt="Rosarito">
                 <div class="contenido-anuncio">
                     <h3>Rosarito</h3>
-                    <p>Descripcion de lo ocurrido</p>
-                    <p class="precio">Damage cost: $2,000,0000</p>
+                    <p style="text-align: justify;">The air quality is not favorable, as determined by the Ministry of Health and the municipal Civil Protection 
+                        coordination due to the accidents that the winds of Santa Ana have left behind.</p>
+                    <p class="precio"></p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">
@@ -95,7 +96,7 @@
                     <h3>Ensenada</h3>
                     <p>More than 90 percent of the population breathes toxic air in Ensenada every day, due to factories, 
                     cars, gas stations or electricity generation in the same city.</p>
-                    <p class="precio">Damage cost: $3,000,0000</p>
+                    <p class="precio"></p>
                     <!-- <ul class="iconos-caracteristicas">
                         <li>
                             <img src="img/icono_wc.svg" alt="icono wc">
@@ -124,24 +125,24 @@
         <div class="container">
                     <div class="heading-text heading-section text-center">
                         <h2>MEET OUR TEAM</h2>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p>
+                        <p>We are seventh semester students who care about the environment.</p>
                     </div>
                     <div class="row team-members">
                         <div class="col-lg-3">
                             <div class="team-member">
                                 <div class="team-image">
-                                    <img src="/img/6.jpg" alt="">
+                                    <img src="/img/eulices2.jpg" alt="">
                                 </div>
                                 <div class="team-desc">
                                     <h3>Eulices Escalante</h3>
                                     <span>Software Developer</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                                    <p>A dedicated person, with encouragement to continue learning, technology lover and Star Wars.</p>
                                     <div class="align-center">
                                         <a target="_blank" href="https://www.facebook.com/eulicesw" class="btn btn-xs btn-slide btn-light">
                                             <i class="fab fa-facebook-f"></i>
                                             <span>Facebook</span>
                                         </a>
-                                        <a target="_blank" href="#" class="btn btn-xs btn-slide btn-light" data-width="100">
+                                        <a target="_blank" href="https://twitter.com/EulicesEscalant" class="btn btn-xs btn-slide btn-light" data-width="100">
                                             <i class="fab fa-twitter"></i>
                                             <span>Twitter</span>
                                         </a>
@@ -160,14 +161,14 @@
                         <div class="col-lg-3">
                             <div class="team-member">
                                 <div class="team-image">
-                                    <img src="/img/7.jpg" alt="">
+                                    <img src="/img/julio.jpg" alt="">
                                 </div>
                                 <div class="team-desc">
                                     <h3>Julio Gastelum</h3>
                                     <span>Software Developer</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                                    <p>A guy who is always learning and wasting his time in videogames and TV series.</br>&nbsp;</p>
                                     <div class="align-center">
-                                        <a href="#" class="btn btn-xs btn-slide btn-light">
+                                        <a target="_blank" href="https://www.facebook.com/julioarmando.gastelummartinez.73" class="btn btn-xs btn-slide btn-light">
                                             <i class="fab fa-facebook-f"></i>
                                             <span>Facebook</span>
                                         </a>
@@ -190,14 +191,14 @@
                         <div class="col-lg-3">
                             <div class="team-member">
                                 <div class="team-image">
-                                    <img src="/img/8.jpg" alt="">
+                                    <img src="/img/erikaCutted.jpg" alt="">
                                 </div>
                                 <div class="team-desc">
                                     <h3>Erika Acosta</h3>
-                                    <span>Software Developer</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                                    <span>Design</span>
+                                    <p>Energetic and joyful, determined to become independent. Loves Zumab and Spinning (IndBike).</p>
                                     <div class="align-center">
-                                        <a href="#" class="btn btn-xs btn-slide btn-light">
+                                        <a target="_blank" href="https://www.facebook.com/erika.acosta.5832" class="btn btn-xs btn-slide btn-light">
                                             <i class="fab fa-facebook-f"></i>
                                             <span>Facebook</span>
                                         </a>
@@ -220,14 +221,14 @@
                         <div class="col-lg-3">
                             <div class="team-member">
                                 <div class="team-image">
-                                    <img src="/img/9.jpg" alt="">
+                                    <img src="/img/chris.jpg" alt="">
                                 </div>
                                 <div class="team-desc">
-                                    <h3>Christopher</h3>
-                                    <span>Software Developer</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing tristique hendrerit laoreet. </p>
+                                    <h3>Christopher A.</h3>
+                                    <span>Networks & Telecommunications</span>
+                                    <p>A guy who is always learning and wasting his time drinking with friends.</br>&nbsp;</p>
                                     <div class="align-center">
-                                        <a href="#" class="btn btn-xs btn-slide btn-light">
+                                        <a target="_blank" href="https://www.facebook.com/chris.gonzalez.96558" class="btn btn-xs btn-slide btn-light">
                                             <i class="fab fa-facebook-f"></i>
                                             <span>Facebook</span>
                                         </a>

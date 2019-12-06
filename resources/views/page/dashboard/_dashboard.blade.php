@@ -24,7 +24,7 @@
 							</div>
 							<div>
 								Updated on 
-								<span id="updated-day">Monday </span><b id="updated-time">07:00</b>.
+								<span id="updated-day">Friday </span><b id="updated-time">08:00</b>.
 							</div>
 						</div>
 					</div>
@@ -323,8 +323,6 @@ window.chartColors = {
                         window.myLine.data.labels.splice(0, 1); // Remove first label.
                         // var totalTemp = temperatures.length;
                         // var totalHum = humidities.length;
-						console.log(temperatures.hour);
-						console.log(humidities.grade);
                         window.myLine.data.labels.push(temperatures.hour); // Se actualiza la hora.
                         window.myLine.data.datasets[0].data[9] = temperatures.grade; // Actualiza los grados.
                         window.myLine.data.datasets[1].data[9] = humidities.grade; // Actualiza los grados.
@@ -341,6 +339,23 @@ window.chartColors = {
             humidities = {!! json_encode($humidities->toArray()) !!};
 			co2s = {!! json_encode($carbonDioxides->toArray()) !!};
             createMainChart(); // Creating main chart.
+			/*document.getElementById("canvas").onclick = function(e) {
+				var activeElement = window.myLine.lastTooltipActive;
+    			console.log(activeElement);
+				var hiddenDatasets = [];
+				var count = 0;
+				console.log(window.myLine.data.datasets.length);
+				for(var i = 0; i < window.myLine.data.datasets.length; i++) {
+					console.log('%c IsDataSetVisible:', 'color:green;font-size:16px;', window.myLine.isDatasetVisible(i));
+					if (!window.myLine.isDatasetVisible(i)) {
+						console.log('Inside if');
+						count++;
+						hiddenDatasets.push(window.myLine.data.datasets[i]);
+					}
+					console.log(count);
+				}
+				console.log(hiddenDatasets);
+			};*/
         }
 
         // Creating main chart.
@@ -394,6 +409,48 @@ window.chartColors = {
                             labelString: 'Time'
                         }
                     }]
+				},
+				legend: { // Logica para cambiar el labelString de mainChart, como le hice, no se, pero ya funciona xd.
+					onClick: function(e, legendItem) {
+						var index = legendItem.datasetIndex;
+						var ci = this.chart;
+						var alreadyHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;
+						ci.data.datasets.forEach(function(e, i) {
+							var title = "";
+							var meta = ci.getDatasetMeta(i);
+							if (i !== index) {
+								if (!alreadyHidden) {
+									meta.hidden = meta.hidden === null ? !meta.hidden : null;
+									if (meta.hidden === null) {
+										window.myLine.options.scales.yAxes[0].scaleLabel.labelString = title;
+									} else if (meta.hidden === false) {
+										switch (i) {
+											case 0: title = "°C"; break;
+											case 1: title = "% RH"; break;
+											case 2: title = "PPM"; break;
+											default: title = "";
+										}
+										window.myLine.options.scales.yAxes[0].scaleLabel.labelString = title;
+									}
+								} else if (meta.hidden === null) {
+									meta.hidden = true;
+								}
+							} else if (i === index) {
+								meta.hidden = null;
+								switch (i) {
+									case 0: title = "°C"; break;
+									case 1: title = "% RH"; break;
+									case 2: title = "PPM"; break;
+									default: title = "";
+								}
+								window.myLine.options.scales.yAxes[0].scaleLabel.labelString = title;
+							}
+						});
+						ci.update();
+					},
+					onHover: function(event, legendItem) {
+						document.getElementById("canvas").style.cursor = 'pointer';
+					}
 				}
 			}
 		};
@@ -431,7 +488,7 @@ window.chartColors = {
 								break;
 							case 'Humidity': 
 								value = humidity;
-								ticks = [max, 90, 80, 70, 60, 50, 40, 30, 20, 10, min];
+								ticks = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, min];
 								break;
 							case 'CarbonDioxide': 
 								value = carbonDioxide;
@@ -543,7 +600,7 @@ window.chartColors = {
 
 	// Using round to the nearest 10.
 	function getNearest(number) {
-		console.log(Math.ceil((number) / 10) * 10);
+		// console.log(Math.ceil((number) / 10) * 10);
 		return Math.ceil((number) / 10) * 10;
 	}
     
