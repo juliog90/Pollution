@@ -485,16 +485,19 @@ window.chartColors = {
 							case 'Temperature': 
 								value = temperature;
 								ticks = [30, 25, 20, 15, 10, 5, 0];
+								max = 30;
 								minorTicks = 5;
 								break;
 							case 'Humidity': 
 								value = humidity;
 								ticks = [100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
+								max = 100;
 								minorTicks = 10;
 								break;
 							case 'CarbonDioxide': 
 								value = carbonDioxide;
 								ticks = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 0];
+								max = 500;
 								minorTicks = 10;
 								break;
 							default: 
@@ -504,7 +507,10 @@ window.chartColors = {
 							['Label', 'Value'],
 							[elements[x].unit, parseInt(value)]
 						]);
-						
+						console.log(max);
+						console.log(elements[x].min);
+						console.log('%c Min', 'colo:green;font-size:16px;', min);
+						console.log('%c Max', 'colo:green;font-size:16px;', max);
 						var options = {
 							width: 200,
 							height: 200,
@@ -514,7 +520,7 @@ window.chartColors = {
 							yellowTo: min,
 							greenFrom: elements[x].max,
 							greenTo: elements[x].min,
-							minorTicks: max,
+							// minorTicks: max,
 							max: min,
 							min: max,
 							majorTicks: ticks,
