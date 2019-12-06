@@ -496,7 +496,7 @@ window.chartColors = {
 								break;
 							case 'CarbonDioxide': 
 								value = carbonDioxide;
-								ticks = [500, 450, 400, 350, 300, 250, 200, 150, 100, 50, 0];
+								ticks = [500, 400, 300, 200, 100, 0];
 								max = 500;
 								minorTicks = 10;
 								break;
