@@ -321,6 +321,9 @@ window.chartColors = {
                         humidities = data.humidities;
 						co2s = data.carbondioxides;
                         window.myLine.data.labels.splice(0, 1); // Remove first label.
+						window.myLine.data.datasets[0].data.splice(0, 1);
+						window.myLine.data.datasets[1].data.splice(0, 1);
+						window.myLine.data.datasets[2].data.splice(0, 1);
                         // var totalTemp = temperatures.length;
                         // var totalHum = humidities.length;
                         window.myLine.data.labels.push(temperatures.hour); // Se actualiza la hora.
@@ -507,10 +510,6 @@ window.chartColors = {
 							['Label', 'Value'],
 							[elements[x].unit, parseInt(value)]
 						]);
-						console.log(max);
-						console.log(elements[x].min);
-						console.log('%c Min', 'colo:green;font-size:16px;', min);
-						console.log('%c Max', 'colo:green;font-size:16px;', max);
 						var options = {
 							width: 200,
 							height: 200,
